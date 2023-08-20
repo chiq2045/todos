@@ -1,6 +1,7 @@
-import { FormEventHandler, MouseEventHandler, useEffect, useState } from 'react'
+import { FormEventHandler, useEffect, useState } from 'react'
 import { Todo, TodoWithId } from 'types'
 import { apiUrl } from './utils/constants'
+import { BarLoader } from 'react-spinners'
 
 export const App = () => {
   const [todos, setTodos] = useState(new Map<string, Todo>())
@@ -58,7 +59,7 @@ export const App = () => {
 
   return (
     <main className="p-4">
-      <section>
+      <section className="">
         <div className="content bg-white u-shadow-md u-round-md p-2 border-green-600 u-border-2 mb-0 u-flex u-flex-column u-gap-4">
           <form onSubmit={handleAddTodo}>
             <label>
@@ -72,6 +73,7 @@ export const App = () => {
               Add Todo
             </button>
           </form>
+          {loading ? <BarLoader role="status" aria-label="Loading" cssOverride={{width: "100%"}}/> : null}
           <div className="u-flex u-flex-column u-gap-2">
             {[...todos].map(([id, todo]) => (
               <div
@@ -83,14 +85,12 @@ export const App = () => {
                 </div>
                 <div className="tile__buttons">
                   <button
-                    className={`${
-                      todo.completed
-                        ? 'text-green-600 bg-green-100'
-                        : 'btn-transparent'
-                    } p-0`}
-                    aria-label={`${
-                      todo.completed ? 'Un-check' : 'Check'
-                    } Complete`}
+                    className={`${todo.completed
+                      ? 'text-green-600 bg-green-100'
+                      : 'btn-transparent'
+                      } p-0`}
+                    aria-label={`${todo.completed ? 'Un-check' : 'Check'
+                      } Complete`}
                   >
                     <span className="icon">
                       <i
