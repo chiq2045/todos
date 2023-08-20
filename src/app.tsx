@@ -1,12 +1,10 @@
-import { FormEventHandler, useEffect, useState } from 'react'
-import { Todo, TodoWithId } from 'types'
-import { apiUrl } from './utils/constants'
+import { FormEventHandler, useState } from 'react'
 import { BarLoader } from 'react-spinners'
+import { useTodos } from './utils/hooks/use-todos'
 
 export const App = () => {
-  const [todos, setTodos] = useState(new Map<string, Todo>())
-  const [loading, setLoading] = useState(false)
   const [newTodoTitle, setNewTodoTitle] = useState('')
+  const { todos, loading, addTodo } = useTodos()
 
   const handleAddTodo: FormEventHandler = (e) => {
     if (!newTodoTitle) {
@@ -17,45 +15,10 @@ export const App = () => {
 
     e.preventDefault()
 
-    setLoading(true)
-    fetch(apiUrl, {
-      method: 'post',
-      body: JSON.stringify({ title: newTodoTitle }),
+    addTodo({ title: newTodoTitle }).then(() => {
+      setNewTodoTitle("")
     })
-      .then((res) => res.json())
-      .then((data: { todo: TodoWithId }) => {
-        setTodos((oldTodos) => {
-          const newTodos = new Map(oldTodos)
-          newTodos.set(data.todo.id, data.todo)
-          return newTodos
-        })
-        setNewTodoTitle('')
-      })
-      .catch((err) => {
-        console.error(err)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
   }
-
-  useEffect(() => {
-    setLoading(true)
-    fetch(apiUrl)
-      .then((res) => res.json())
-      .then((data: { todos: TodoWithId[] }) => {
-        console.log(data)
-        const newTodos = new Map<string, Todo>()
-        data.todos.forEach((todo) => {
-          newTodos.set(todo.id, todo)
-        })
-        setTodos(newTodos)
-      })
-      .catch((err) => console.error(err))
-      .finally(() => {
-        setLoading(false)
-      })
-  }, [])
 
   return (
     <main className="p-4">
@@ -73,7 +36,7 @@ export const App = () => {
               Add Todo
             </button>
           </form>
-          {loading ? <BarLoader role="status" aria-label="Loading" cssOverride={{width: "100%"}}/> : null}
+          {loading ? <BarLoader role="status" aria-label="Loading" cssOverride={{ width: "100%" }} /> : null}
           <div className="u-flex u-flex-column u-gap-2">
             {[...todos].map(([id, todo]) => (
               <div
