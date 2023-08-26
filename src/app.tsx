@@ -1,9 +1,14 @@
 import { BarLoader } from 'react-spinners'
 import { useTodos } from './utils/hooks/use-todos'
-import { AddTodoForm } from './components/add-todo-forms'
+import { useEffect } from 'react'
+import { AddTodoForm } from './components/add-todo-form'
 
 export const App = () => {
-  const { todos, loading, addTodo } = useTodos()
+  const { todos, loading, addTodo, getTodos } = useTodos()
+
+  useEffect(() => {
+    getTodos()
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <main className="p-4">

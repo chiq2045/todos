@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Todo, TodoWithId } from "types"
 import { apiUrl } from "../constants"
 
@@ -89,15 +89,12 @@ export const useTodos = () => {
       })
   }
 
-  useEffect(() => {
-    getTodos();
-  }, [])
-  
   return {
     todos,
     loading,
     addTodo,
     updateTodo,
     deleteTodo,
+    getTodos,
   }
 }
