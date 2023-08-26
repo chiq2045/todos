@@ -1,0 +1,6 @@
+{
+  "src/**/*.ts": "prettier -w",
+  "src/**/*.tsx": "prettier -w",
+  "app/**/*.ts": "prettier -w",
+  "types/**/*.ts": "prettier -w"
+}

@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "prepare": "husky install",
-    "start": "parcel src/index.html"
+    "start": "parcel src/index.html",
+    "postinstall": "husky install",
+    "prepack": "pinst --disable",
+    "postpack": "pinst --enable"
   },
   "author": "",
   "license": "ISC",
@@ -32,11 +35,12 @@
     "lint-staged": "^14.0.0",
     "miragejs": "^0.1.47",
     "parcel": "^2.9.3",
+    "pinst": "^3.0.0",
     "prettier": "^3.0.0",
     "process": "^0.11.10",
     "typescript": "^5.1.6"
   },
-  "packageManager": "yarn@4.0.0-rc.49",
+  "packageManager": "yarn@4.0.0-rc.50",
   "dependenciesMeta": {
     "prettier@3.0.2": {
       "unplugged": true

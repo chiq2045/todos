@@ -1,9 +1,9 @@
-import { useRef, useState } from "react"
-import { useTodos } from "src/utils/hooks/use-todos"
-import { Dialog } from "./dialog"
+import { useRef, useState } from 'react'
+import { useTodos } from 'src/utils/hooks/use-todos'
+import { Dialog } from './dialog'
 
 interface Props {
-  addTodo: ReturnType<typeof useTodos>["addTodo"]
+  addTodo: ReturnType<typeof useTodos>['addTodo']
 }
 export const AddTodoForm = (props: Props) => {
   const [newTodoTitle, setNewTodoTitle] = useState('')
@@ -25,16 +25,21 @@ export const AddTodoForm = (props: Props) => {
       return
     }
 
-    props.addTodo({ title: newTodoTitle }).then(() => {
-      setNewTodoTitle("")
-    }).finally(() => {
-      closeDialog();
-    })
+    props
+      .addTodo({ title: newTodoTitle })
+      .then(() => {
+        setNewTodoTitle('')
+      })
+      .finally(() => {
+        closeDialog()
+      })
   }
 
   return (
     <>
-      <button className="btn-dark" onClick={openDialog}>Add Todo</button>
+      <button className="btn-dark" onClick={openDialog}>
+        Add Todo
+      </button>
       <Dialog
         ref={ref}
         title="Add Todo"
@@ -53,7 +58,11 @@ export const AddTodoForm = (props: Props) => {
             <button className="btn-light" onClick={closeDialog}>
               Cancel
             </button>
-            <button className="btn-dark" onClick={handleAddTodo} disabled={newTodoTitle === ""}>
+            <button
+              className="btn-dark"
+              onClick={handleAddTodo}
+              disabled={newTodoTitle === ''}
+            >
               Add Todo
             </button>
           </div>

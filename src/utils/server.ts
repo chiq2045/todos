@@ -20,6 +20,10 @@ const todoFactory = Factory.extend<TodoWithId>({
   completed() {
     return false
   },
+  due() {
+    const today = new Date()
+    return today.toISOString()
+  },
 })
 const factories = {
   todo: todoFactory,

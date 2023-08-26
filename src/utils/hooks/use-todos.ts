@@ -1,6 +1,6 @@
-import { useState } from "react"
-import { Todo, TodoWithId } from "types"
-import { apiUrl } from "../constants"
+import { useState } from 'react'
+import { Todo, TodoWithId } from 'types'
+import { apiUrl } from '../constants'
 
 export const useTodos = () => {
   const [todos, setTodos] = useState(new Map<string, Todo>())
@@ -24,7 +24,7 @@ export const useTodos = () => {
       })
   }
 
-  const addTodo = async (todo: Pick<Todo, "title" | "subtitle">) => {
+  const addTodo = async (todo: Pick<Todo, 'title' | 'subtitle'>) => {
     setLoading(true)
     return fetch(apiUrl, {
       method: 'post',
@@ -46,7 +46,7 @@ export const useTodos = () => {
       })
   }
 
-  const updateTodo = async (id:string, todo: Todo) => {
+  const updateTodo = async (id: string, todo: Todo) => {
     setLoading(true)
     return fetch(`${apiUrl}/${id}`, {
       method: 'put',
@@ -68,7 +68,7 @@ export const useTodos = () => {
       })
   }
 
-  const deleteTodo = async (id:string) => {
+  const deleteTodo = async (id: string) => {
     setLoading(true)
     return fetch(`${apiUrl}/${id}`, {
       method: 'delete',
