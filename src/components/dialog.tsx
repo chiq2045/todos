@@ -28,18 +28,14 @@ export const Dialog = forwardRef<HTMLDialogElement | null, Props>(
             )}
           </div>
           {children ?? (
-            <form
-              onSubmit={(e) => {
-                e.preventDefault()
-              }}
-            >
+            <>
               {props.body ? (
                 <div className="modal-body py-2">{props.body}</div>
               ) : null}
               {props.footer ? (
                 <div className="modal-footer pt-2">{props.footer}</div>
               ) : null}
-            </form>
+            </>
           )}
         </div>
       </dialog>

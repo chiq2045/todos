@@ -1,10 +1,18 @@
 import { BarLoader } from 'react-spinners'
 import { useTodos } from './utils/hooks/use-todos'
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { AddTodoForm } from './components/add-todo-form'
+import { Dialog } from './components/dialog'
 
 export const App = () => {
-  const { todos, loading, addTodo, getTodos } = useTodos()
+  const [deleteTodoId, setDeleteTodoId] = useState('')
+  const { todos, loading, addTodo, getTodos, deleteTodo } = useTodos()
+  const deleteTodoDialogRef = useRef<HTMLDialogElement>(null)
+
+  const handleDeleteTodo = (id: string) => () => {
+    deleteTodoDialogRef.current?.showModal()
+    setDeleteTodoId(id)
+  }
 
   useEffect(() => {
     getTodos()
@@ -52,6 +60,7 @@ export const App = () => {
                   <button
                     className="btn-dark text-red-600 outline p-0"
                     aria-label="Delete"
+                    onClick={handleDeleteTodo(id)}
                   >
                     <span className="icon">
                       <i
@@ -66,6 +75,35 @@ export const App = () => {
           </div>
         </div>
       </section>
+      <Dialog
+        ref={deleteTodoDialogRef}
+        title="Delete Todo"
+        onClose={() => deleteTodoDialogRef.current?.close()}
+        body={
+          <p>Do you want to delete {`"${todos.get(deleteTodoId)?.title}"`}</p>
+        }
+        footer={
+          <div className="u-flex u-justify-space-between">
+            <button
+              onClick={() => {
+                deleteTodoDialogRef.current?.close()
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              className="btn-danger"
+              type="submit"
+              onClick={() => {
+                deleteTodo(deleteTodoId)
+                deleteTodoDialogRef.current?.close()
+              }}
+            >
+              Confirm
+            </button>
+          </div>
+        }
+      />
     </main>
   )
 }

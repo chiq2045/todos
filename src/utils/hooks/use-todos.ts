@@ -26,7 +26,7 @@ export const useTodos = () => {
 
   const addTodo = async (todo: Pick<Todo, 'title' | 'subtitle'>) => {
     setLoading(true)
-    return fetch(apiUrl, {
+    fetch(apiUrl, {
       method: 'post',
       body: JSON.stringify(todo),
     })
@@ -38,9 +38,6 @@ export const useTodos = () => {
           return newTodos
         })
       })
-      .catch((err) => {
-        console.error(err)
-      })
       .finally(() => {
         setLoading(false)
       })
@@ -48,7 +45,7 @@ export const useTodos = () => {
 
   const updateTodo = async (id: string, todo: Todo) => {
     setLoading(true)
-    return fetch(`${apiUrl}/${id}`, {
+    fetch(`${apiUrl}/${id}`, {
       method: 'put',
       body: JSON.stringify(todo),
     })
@@ -60,9 +57,6 @@ export const useTodos = () => {
           return newTodos
         })
       })
-      .catch((err) => {
-        console.error(err)
-      })
       .finally(() => {
         setLoading(false)
       })
@@ -70,19 +64,15 @@ export const useTodos = () => {
 
   const deleteTodo = async (id: string) => {
     setLoading(true)
-    return fetch(`${apiUrl}/${id}`, {
+    fetch(`${apiUrl}/${id}`, {
       method: 'delete',
     })
-      .then((res) => res.json())
       .then(() => {
         setTodos((oldTodos) => {
           const newTodos = new Map(oldTodos)
           newTodos.delete(id)
           return newTodos
         })
-      })
-      .catch((err) => {
-        console.error(err)
       })
       .finally(() => {
         setLoading(false)
