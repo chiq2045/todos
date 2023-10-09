@@ -15,7 +15,6 @@ export const useTodos = (
     [] as [string, Todo][],
   )
 
-  console.log({ todos, localTodos })
   const getTodos = async () => {
     setLoading(true)
     if (devMode) {
@@ -45,7 +44,7 @@ export const useTodos = (
       })
   }
 
-  const addTodo = async (todo: Pick<Todo, 'title' | 'subtitle'>) => {
+  const addTodo = async (todo: Pick<Todo, 'title' | 'notes'>) => {
     setLoading(true)
     if (devMode) {
       return new Promise(() => {

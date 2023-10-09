@@ -1,8 +1,8 @@
 export type Todo = {
   completed: boolean
   due: string
-  subtitle?: string
   title: string
+  notes?: string
 }
 
 export type TodoWithId = Todo & {
